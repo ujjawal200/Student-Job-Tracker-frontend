@@ -17,4 +17,23 @@ body {
     margin-top: -0.5rem;
     margin-bottom: 0.5rem;
   }
+  .job-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .job-card {
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .job-card a {
+    color: #0070f3;
+    text-decoration: none;
+  }
   
