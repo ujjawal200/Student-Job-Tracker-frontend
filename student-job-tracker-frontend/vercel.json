@@ -1,0 +1,8 @@
+{
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
+    "env": {
+      "VITE_API_URL": "https://student-job-tracker-backend-h1mg.onrender.com/api"
+    }
+  }
+  
