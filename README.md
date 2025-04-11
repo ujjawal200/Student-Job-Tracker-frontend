@@ -40,8 +40,8 @@ A full-stack MERN application to help students track their job applications with
 
 ## 🌐 Live Demo
 
-- 🔗 Frontend: (https://your-vercel-url.vercel.app)
-- 🔗 Backend API: (https://your-backend-url.onrender.com/api)
+- 🔗 Frontend: (https://student-job-tracker-frontend-ty6q.vercel.app)
+- 🔗 Backend API: ( https://student-job-tracker-backend-h1mg.onrender.com/api/jobs)
 
 ---
 
