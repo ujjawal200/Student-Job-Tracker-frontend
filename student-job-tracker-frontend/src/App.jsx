@@ -2,12 +2,14 @@ import React , {useState,useEffect} from 'react';
 import axios from 'axios';
 import AddJobForm from "./components/AddJobForm";
 import JobList from './components/JobList';
+import JobControls from './components/JobControls';
 
 
 const App = ()=>{
   const [jobs, setJobs] = useState([]);
   const [filterStatus, setFilterStatus] = useState('All');
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' = Newest First
+  const [refresh , setRefresh] = useState(false);
 
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const App = ()=>{
     };
 
     fetchJobs();
-  }, []);
+  }, [refresh]);
 
 
   // const handleAddJob = (data) =>{
@@ -32,9 +34,9 @@ const App = ()=>{
   const handleAddJob = async (jobData) => {
     try {
       const res = await axios.post('https://potential-space-zebra-gjq4rpwj6x72jw5-5000.app.github.dev/api/jobs', jobData);
-      console.log('✅ Job saved:', res.data);
-      // You can also update a job list here after adding
-      alert("job added successfully ! ");
+      // console.log('✅ Job saved:', res.data);
+      // alert("job added successfully ! ");
+      setRefresh(prev => !prev);
     } catch (err) {
       console.error('❌ Error saving job:', err.response?.data || err.message);
       alert("Error saving job ! ");
@@ -74,40 +76,33 @@ const filteredJobs = jobs
 
   return(
     <div className="app-container">
-      <h1> Student job tracker</h1>
-      <AddJobForm onAdd={handleAddJob} />
-
-      <div style={{ marginTop: '1.5rem' }}>
-        <label>Filter by Status: </label>
-        <select
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="Applied">Applied</option>
-          <option value="Interview">Interview</option>
-          <option value="Offer">Offer</option>
-          <option value="Rejected">Rejected</option>
-        </select>
-      </div>
-      <div style={{ marginTop: '1rem' }}>
-  <label>Sort by Date: </label>
-  <select
-    value={sortOrder}
-    onChange={(e) => setSortOrder(e.target.value)}
-  >
-    <option value="desc">Newest First</option>
-    <option value="asc">Oldest First</option>
-  </select>
-</div>
-
-
-      <JobList
+      <h1> Job Tracking System</h1>
+      <div style={{display:'flex'}}>
+        <div style={{width:"50%"}}>
+        <JobControls
+      filterStatus={filterStatus}
+      setFilterStatus={setFilterStatus}
+      sortOrder={sortOrder}
+      setSortOrder={setSortOrder}
+      />
+      <div style={{
+        height:'100%',
+        overflowY:'auto'}}>
+        <JobList
       // jobs={jobs}
       jobs={filteredJobs}
       onUpdateStatus={handleUpdateStatus}
       onDelete={handleDeleteJob}
       />
+      </div>
+        </div>
+        <div style={{width:"50%"}}>
+        <AddJobForm onAdd={handleAddJob} />
+
+        </div>
+      </div>
+    
+     
 
 
 
