@@ -10,12 +10,14 @@ const App = ()=>{
   const [filterStatus, setFilterStatus] = useState('All');
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' = Newest First
   const [refresh , setRefresh] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get('https://potential-space-zebra-gjq4rpwj6x72jw5-5000.app.github.dev/api/jobs');
+        const res = await axios.get(`${API_URL}/jobs`);
         console.log(res ," api response");
         setJobs(res.data);
       } catch (err) {
@@ -33,7 +35,7 @@ const App = ()=>{
   // }
   const handleAddJob = async (jobData) => {
     try {
-      const res = await axios.post('https://potential-space-zebra-gjq4rpwj6x72jw5-5000.app.github.dev/api/jobs', jobData);
+      const res = await axios.post(`${API_URL}/jobs`, jobData);
       // console.log('✅ Job saved:', res.data);
       // alert("job added successfully ! ");
       setRefresh(prev => !prev);
@@ -46,7 +48,7 @@ const App = ()=>{
   // 🟡 Update Job Status
 const handleUpdateStatus = async (id, newStatus) => {
   try {
-    const res = await axios.patch(`https://potential-space-zebra-gjq4rpwj6x72jw5-5000.app.github.dev/api/jobs/${id}`, { status: newStatus });
+    const res = await axios.patch(`${API_URL}/jobs/${id}`, { status: newStatus });
     setJobs(prev =>
       prev.map(job => (job._id === id ? { ...job, status: res.data.status } : job))
     );
@@ -58,7 +60,7 @@ const handleUpdateStatus = async (id, newStatus) => {
 // 🗑️ Delete Job
 const handleDeleteJob = async (id) => {
   try {
-    await axios.delete(`https://potential-space-zebra-gjq4rpwj6x72jw5-5000.app.github.dev/api/jobs/${id}`);
+    await axios.delete(`${API_URL}/jobs/${id}`);
     setJobs(prev => prev.filter(job => job._id !== id));
   } catch (err) {
     console.error('❌ Error deleting job:', err);
